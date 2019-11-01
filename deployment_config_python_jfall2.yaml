@@ -1,0 +1,71 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: python-conduit-jfall2
+  labels:
+    app: python-conduit-jfall2
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - python-conduit-jfall2
+        from:
+          kind: ImageStreamTag
+          name: 'python-conduit:latest'
+  replicas: 1
+  revisionHistoryLimit: 10
+  test: false
+  selector:
+    app: python-conduit-jfall2
+    deploymentconfig: python-conduit-jfall2
+  template:
+    metadata:
+      labels:
+        app: python-conduit-jfall2
+        deploymentconfig: python-conduit-jfall2
+    spec:
+      containers:
+        - name: python-conduit-jfall2
+          image: python-conduit:latest 
+          env:
+            - name: DEBUG
+              value: 'False'
+            - name: DB_HOSTNAME
+              value: 'postgresql'
+            - name: DB_NAME
+              value: 'twitter'
+            - name: DB_USER
+              value: 'twitter'
+            - name: DB_PASSWORD
+              value: 'redhat123'
+            - name: KAFKA_TOPIC
+              value: 'jfall2-topic'
+            - name: KAFKA_BOOTSTRAP_SERVER
+              value: 'jfall-kafka-cluster-kafka-bootstrap:9092'
+            - name: KAFKA_CONSUMER_GROUP
+              value: 'jfallgroup2'
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+status:

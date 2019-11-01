@@ -1,0 +1,18 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: api-backend
+  labels:
+    app: api-backend
+spec:
+  host: api-backend.apps.jfall.rh-rules.org
+  to:
+    kind: Service
+    name: api-backend
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  wildcardPolicy: None
+status:
+  ingress:
+    - host: api-backend.apps.jfall.rh-rules.org

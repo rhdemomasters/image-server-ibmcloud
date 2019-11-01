@@ -1,0 +1,31 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: python-conduit
+  labels:
+    app: python-conduit
+spec:
+  nodeSelector:
+    kubernetes.io/os: linux
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'python-conduit:latest'
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        namespace: openshift
+        name: 'python:3.6'
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/wzzrd/kafka-twitter-service.git'
+      ref: sql
+  runPolicy: Serial
+  triggers:
+    - type: ImageChange
+    - type: ConfigChange
+status:
+  lastVersion: 2

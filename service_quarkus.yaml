@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-backend
+  labels:
+    app: api-backend
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: api-backend
+    deploymentconfig: api-backend

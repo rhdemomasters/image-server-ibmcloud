@@ -1,0 +1,63 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: api-backend
+  labels:
+    app: api-backend
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - api-backend
+        from:
+          kind: ImageStreamTag
+          name: 'api-backend:latest'
+  replicas: 1
+  revisionHistoryLimit: 10
+  test: false
+  selector:
+    app: api-backend
+    deploymentconfig: api-backend
+  template:
+    metadata:
+      labels:
+        app: api-backend
+        deploymentconfig: api-backend
+    spec:
+      containers:
+        - name: api-backend
+          image: api-backend:latest 
+          env:
+            - name: image-server.hostName
+              value: http://api-backend.apps.jfall.rh-rules.org
+            - name: quarkus.datasource.url
+              value: 'jdbc:postgresql://postgresql:5432/twitter'
+            - name: quarkus.datasource.username
+              value: twitter
+            - name: quarkus.datasource.password
+              value: redhat123
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+status:
