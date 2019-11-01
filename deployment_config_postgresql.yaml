@@ -71,7 +71,6 @@ spec:
           securityContext:
             capabilities: {}
             privileged: false
-            procMount: Default
           ports:
             - containerPort: 5432
               protocol: TCP
