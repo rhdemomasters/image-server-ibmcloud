@@ -5,7 +5,7 @@ metadata:
   labels:
     app: frontend
 spec:
-  host: frontend.apps.jfall.rh-rules.org
+  host: frontend-twitter-image-server.argocd.holland-ocp-311-5c19b80d0b42bf06f50309d5c8a080e8-0001.ams03.containers.appdomain.cloud/
   to:
     kind: Service
     name: frontend
@@ -15,4 +15,4 @@ spec:
   wildcardPolicy: None
 status:
   ingress:
-    - host: frontend.apps.jfall.rh-rules.org
+    - host: frontend-twitter-image-server.argocd.holland-ocp-311-5c19b80d0b42bf06f50309d5c8a080e8-0001.ams03.containers.appdomain.cloud

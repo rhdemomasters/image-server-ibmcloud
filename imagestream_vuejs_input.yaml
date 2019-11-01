@@ -8,12 +8,12 @@ spec:
   lookupPolicy:
     local: false
   tags:
-    - name: jfall1
+    - name: ibmcloud1
       annotations:
-        openshift.io/imported-from: 'quay.io/mburgerh/vuejs-image-server:jfall1'
+        openshift.io/imported-from: 'quay.io/mburgerh/vuejs-image-server:ibmcloud1
       from:
         kind: DockerImage
-        name: 'quay.io/mburgerh/vuejs-image-server:jfall1'
+        name: 'quay.io/mburgerh/vuejs-image-server:ibmcloud1
       importPolicy: {}
       referencePolicy:
         type: Source

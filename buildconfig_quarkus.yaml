@@ -20,7 +20,7 @@ spec:
   source:
     type: Git
     git:
-      uri: 'https://github.com/forum-demo-2019/quarkus-image-api.git'
+      uri: 'https://github.com/rhdemomasters/quarkus-image-api.git'
       ref: v0.4
   runPolicy: Serial
   triggers:

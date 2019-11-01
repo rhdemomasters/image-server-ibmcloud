@@ -24,7 +24,7 @@ spec:
           - frontend
         from:
           kind: ImageStreamTag
-          name: 'frontend:jfall1'
+          name: 'frontend:ibmcloud1'
   replicas: 1
   revisionHistoryLimit: 10
   test: false
@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: frontend:jfall1
+          image: frontend:ibmcloud1
           ports:
             - containerPort: 8080
               protocol: TCP
