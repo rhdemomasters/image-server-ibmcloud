@@ -5,6 +5,8 @@ metadata:
   labels:
     app: python-conduit
 spec:
+  nodeSelector:
+    node-role.kubernetes.io/compute: 'true'
   output:
     to:
       kind: ImageStreamTag
